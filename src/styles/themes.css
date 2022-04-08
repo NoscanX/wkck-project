@@ -1,0 +1,21 @@
+.light-theme {
+    --primary-background: #f6f6f2;
+    --secondary-background: #badfe7;
+    --list-background: #65c7ce;
+    --active-and-hover: #ca2c39;
+    --darker-accents: #8680e9;
+    --text-color: #000000;
+    --primary-gradient: #adaaeb;
+    --secondary-gradient: #8680e9;
+}
+
+.dark-theme {
+    --primary-background: #292929;
+    --secondary-background: #404040;
+    --list-background: #323232;
+    --active-and-hover: #F2AF29;
+    --darker-accents: #8f8f8f;
+    --text-color: #FFFFFF;
+    --primary-gradient: #c79022;
+    --secondary-gradient: #ad7d1c;
+}
