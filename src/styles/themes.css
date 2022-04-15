@@ -7,6 +7,7 @@
     --text-color: #000000;
     --primary-gradient: #adaaeb;
     --secondary-gradient: #8680e9;
+    --accents: #8680e9;
 }
 
 .dark-theme {
@@ -17,5 +18,6 @@
     --darker-accents: #8f8f8f;
     --text-color: #FFFFFF;
     --primary-gradient: #c79022;
-    --secondary-gradient: #ad7d1c;
+    --secondary-gradient: #795610;
+    --accents: #ad7d1c;
 }
