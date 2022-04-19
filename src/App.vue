@@ -7,14 +7,14 @@
       <router-link to="/about" class="nav-list-item">Pomoc</router-link>
     </div>
     <div class="log-in-list">
-            <div class="theme-slider-box">
-                <h3>Włącz ciemny motyw</h3>
-                <label class="switch">
-                    <input type="checkbox" @click="changeTheme">
-                    <span class="slider round"></span>
-                </label>
-            </div>
+        <div class="theme-slider-box">
+            <h3>Włącz ciemny motyw</h3>
+            <label class="switch">
+                <input type="checkbox" @click="changeTheme">
+                <span class="slider round"></span>
+            </label>
         </div>
+    </div>
   </nav>
   <router-view/>
 </template>
@@ -46,7 +46,7 @@ export default {
 		},
 		setTheme(themeName){
 			localStorage.setItem('switch-theme', themeName);
-    	document.documentElement.className = themeName;
+    	    document.documentElement.className = themeName;
 		},
 	}
 }
@@ -74,11 +74,25 @@ export default {
   color: var(--text-color);
 }
 
+body {
+    height: 100vh;
+    background-color: var(--primary-background);
+    color: var(--text-color);
+    font-family: 'Open Sans', sans-serif;
+}
+
+body h1, h2, h3 {
+    font-family: 'Roboto', sans-serif;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+    position: fixed;
+    width: 100%;
+    background-color: var(--primary-background);
 }
 
 .nav-list-item {

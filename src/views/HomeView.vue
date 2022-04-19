@@ -39,9 +39,26 @@
                 <h2>Kategoria: Książki <fa class="icon-header" icon="book"/></h2>
                 <hr>
                 <ul>
-                    
+                    <li v-for="book in filteredBooks" :key="book.id" :class="{ fav: book.isFav }">
+                        <div class="info">
+                            <div class="title-box">
+                                <p> {{ book.title }} </p>
+                            </div>
+                            <div class="description-box">
+                                <p class="desc"> {{ book.description }} </p>
+                            </div>
+                            <div class="icons">
+                                <fa class="icon" icon="trash"/>
+                                <fa class="icon" icon="pen"/>
+                                <fa class="icon" :class="{ favicon: book.isFav }" icon="heart" @click="toggleFav(book)"/>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
+        </div>
+        <div>
+            <h1>Zaloguj sie lepiej</h1>
         </div>
     </div>
 
@@ -51,7 +68,14 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 
+import LoginView from "./LoginView.vue";
+
 export default {
+
+    components: {
+        LoginView
+    },
+
     name: 'HomeView',
     data () {
         return {
@@ -64,17 +88,45 @@ export default {
                 },
                 { 
                     title: 'Tinlicker - Be Here and Now', 
-                    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est velit minus incidunt temporibus cumque nulla eum corrupti molestias atque ipsa excepturi, autem corporis ab, id perspiciatis libero accusamus deleniti aut vero impedit nemo. Accusantium perferendis cupiditate quae aut praesentium quidem.', isFav: false 
+                    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est velit minus incidunt temporibus cumque nulla eum corrupti molestias atque ipsa excepturi, autem corporis ab, id perspiciatis libero accusamus deleniti aut vero impedit nemo. Accusantium perferendis cupiditate quae aut praesentium quidem.', isFav: true 
                 },
                 { 
                     title: 'gardenstate, Oliver Smith - By Your Side', 
                     description: 'Lorem ipsum dolor sit amet.', 
-                    isFav: true 
+                    isFav: false 
                 },
                 { 
                     title: 'Above & Beyond - Believer', 
                     description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
                     isFav: true 
+                },
+            ],
+
+            books: [
+                { 
+                    title: 'Adam Mickiewicz - Dziady', 
+                    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', 
+                    isFav: true 
+                },
+                { 
+                    title: 'Jeremy Clarkson - Świat według Clarksona', 
+                    description: 'Lorem ipsum dolor sit amet.', 
+                    isFav: false 
+                },
+                { 
+                    title: 'gardenstate, Oliver Smith - By Your Side', 
+                    description: 'Lorem ipsum dolor sit amet. Fajna książka.', 
+                    isFav: false 
+                },
+                { 
+                    title: 'Above & Beyond - Believer', 
+                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
+                    isFav: true 
+                },
+                { 
+                    title: 'Above & Beyond - Believer', 
+                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
+                    isFav: false 
                 },
             ],
         }
@@ -94,6 +146,13 @@ export default {
             }else {
                 return this.songs;
             }
+        },
+        filteredBooks() {
+            if(!this.showAll) {
+                return this.books.filter(book => book.isFav)
+            }else {
+                return this.books;
+            }
         }
     }
 }
@@ -101,16 +160,7 @@ export default {
 
 <style lang="css">
 
-body {
-    height: 100vh;
-    background-color: var(--primary-background);
-    color: var(--text-color);
-    font-family: 'Open Sans', sans-serif;
-}
 
-body h1, h2, h3 {
-    font-family: 'Roboto', sans-serif;
-}
 
 .content {
     display: flex;
@@ -143,7 +193,7 @@ nav {
     background-color: var(--secondary-background);
     border-radius: 40px;
     box-shadow: 10px 10px 20px #1d1d1d;
-    margin: 2rem 0;
+    margin: 5rem 0 2rem 0;
     outline: 2px solid var(--accents);
 }
 
