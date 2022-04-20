@@ -4,11 +4,11 @@
       <router-link to="/" class="nav-list-item">Home</router-link>
       <router-link to="/login" class="nav-list-item">Zaloguj</router-link>
       <router-link to="/add" class="nav-list-item">Dodaj do listy</router-link>
-      <router-link to="/about" class="nav-list-item">Pomoc</router-link>
+      <router-link to="/help" class="nav-list-item">Pomoc</router-link>
     </div>
     <div class="log-in-list">
         <div class="theme-slider-box">
-            <h3>Włącz ciemny motyw</h3>
+            <h3>Zmień motyw</h3>
             <label class="switch">
                 <input type="checkbox" @click="changeTheme">
                 <span class="slider round"></span>
