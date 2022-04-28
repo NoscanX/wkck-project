@@ -6,12 +6,18 @@
                 <div class="header">
                     <h1>Twoja lista</h1>
                 </div>
-                <div class="fav-only">
-                    <h3>Pokaż tylko ulubione</h3>
+                <div class="fav-wrap">
+                    <div class="fav-only">
+                        <h3>Pokaż tylko ulubione</h3>
                     <label class="switch">
                         <input type="checkbox" @click="toggleShowAll">
                         <span class="slider round"></span>
                     </label>
+                    </div>
+                    <div>
+                        <!-- <h1>Zaloguj sie lepiej</h1> -->
+                        <button @click="toggleModal">sdasdas</button>
+                    </div>
                 </div>
             </div>
             <div class="category music">
@@ -57,9 +63,17 @@
                 </ul>
             </div>
         </div>
-        <div>
-            <h1>Zaloguj sie lepiej</h1>
-        </div>
+        
+        <div v-if="showModal">
+    <AddModalView theme="sale" @close="toggleModal">
+      <template v-slot:links>
+        <a href="#">sign up now</a>
+        <a href="#">more info</a>
+      </template>
+      <h1>Okno modalne!</h1>
+      
+    </AddModalView>
+  </div>  
     </div>
 
 </template>
@@ -69,17 +83,20 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 import LoginView from "./LoginView.vue";
+import AddModalView from "./AddModalView.vue";
 
 export default {
 
     components: {
-        LoginView
+        LoginView,
+        AddModalView
     },
 
     name: 'HomeView',
     data () {
         return {
             showAll: true,
+            showModal: false,
             songs: [
                 { 
                     title: 'Above & Beyond - Gratitude', 
@@ -137,7 +154,10 @@ export default {
         },
         toggleFav(song) {
             song.isFav = !song.isFav;
-        }
+        },
+            toggleModal() {
+            this.showModal = !this.showModal
+            }
     },
     computed: {
         filteredSongs() {
@@ -218,8 +238,14 @@ nav {
 
 .fav-only {
     display: flex;
-    justify-content: center;
     align-items: center;
+}
+
+.fav-wrap {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    min-height: 80px;
 }
 
 .category {
@@ -229,6 +255,8 @@ nav {
 
 .category ul {
     list-style-type: none;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 .category ul li {
@@ -237,6 +265,7 @@ nav {
     margin: 1.4rem 0;
     background-color: var(--list-background);
     box-shadow: 5px 5px 5px #252525;
+    width: 98%;
 }
 
 .fav {

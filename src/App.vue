@@ -103,7 +103,7 @@ nav {
     text-decoration: none;
     font-family: 'Roboto', sans-serif;
     color: var(--text-color);
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .nav-list-item::after {
@@ -121,6 +121,10 @@ nav {
 
 .nav-list-item:hover {
     color: var(--active-and-hover);
+}
+
+.nav-list-item:focus { /** need fix */
+    font-weight: 700;
 }
 
 .switch {

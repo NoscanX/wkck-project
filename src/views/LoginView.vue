@@ -77,6 +77,7 @@ export default {
     margin: 10px 0;
     font-family: 'Roboto', sans-serif;
     font-size: 1.2rem;
+    outline: 1px solid var(--accents);
 }
 
 .login-panel input:focus{
