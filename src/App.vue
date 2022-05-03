@@ -21,18 +21,18 @@
 
 <script>
 export default {
-  mounted(){
+    mounted(){
     if(localStorage.getItem('switch-theme') === 'dark-theme')
-		{
-			this.setTheme('dark-theme');
-		}
-		else
-		{
-			this.setTheme('light-theme');
-		}
-	},
+        {
+            this.setTheme('dark-theme');
+        }
+        else
+        {
+            this.setTheme('light-theme');
+        }
+    },
 
-  methods: {
+    methods: {
 		changeTheme(){
 			if(localStorage.getItem('switch-theme') === 'dark-theme')
 			{
@@ -120,11 +120,16 @@ nav {
 }
 
 .nav-list-item:hover {
-    color: var(--active-and-hover);
+    /* color: var(--active-and-hover); */
 }
 
-.nav-list-item:focus { /** need fix */
+.nav-list a.router-link-exact-active {
     font-weight: 700;
+    background-image: linear-gradient(
+        var(--primary-gradient),
+        var(--secondary-gradient));
+    padding: 5px;
+    border-radius: 10px;
 }
 
 .switch {

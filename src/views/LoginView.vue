@@ -2,14 +2,16 @@
   <div class="content">
     <div class="login-panel">
       <h1>Zaloguj się</h1>
-      <form action="">
-        <label for="">Login</label>
-        <input type="text" name="" id="login-input">
-        <label for="">Hasło</label>
-        <input type="password" name="" id="password-input">
+      <form @submit.prevent="handleSubmit">
+        <label>Login</label>
+        <input type="text" v-model="login" required>
+        <label>Hasło</label>
+        <input type="password" v-model="password" required>
         <button class="btn-submit" type="submit">Zaloguj</button>
       </form>
     </div>
+    <p>Login: {{ login }}</p>
+    <p>Password: {{ password }}</p>
   </div>
 </template>
 
@@ -24,18 +26,21 @@ export default {
         type: Boolean,
         default: false,
       },
-        
+      login: '',
+      password: '',
+
+      tempLogin: 'user',
+      tempPassword: 'pass'
     }
   },
 
   methods: {
-
-  },
-
-  computed: {
-
+    handleSubmit() {
+      if (this.login === this.tempLogin && this.password === this.tempPassword) {
+        return "prac";
+      }
+    }
   }
-
 }
 </script>
 

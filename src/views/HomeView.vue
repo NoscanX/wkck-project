@@ -14,10 +14,10 @@
                         <span class="slider round"></span>
                     </label>
                     </div>
-                    <div>
-                        <!-- <h1>Zaloguj sie lepiej</h1> -->
+                    <!-- <div>
+                        <h1>Zaloguj sie lepiej</h1>
                         <button @click="toggleModal">sdasdas</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="category music">
@@ -33,7 +33,7 @@
                                 <p class="desc"> {{ song.description }} </p>
                             </div>
                             <div class="icons">
-                                <fa class="icon" icon="trash"/>
+                                <fa class="icon" icon="trash" @click="deleteItem(song)"/>
                                 <fa class="icon" icon="pen"/>
                                 <fa class="icon" :class="{ favicon: song.isFav }" icon="heart" @click="toggleFav(song)"/>
                             </div>
@@ -54,9 +54,30 @@
                                 <p class="desc"> {{ book.description }} </p>
                             </div>
                             <div class="icons">
-                                <fa class="icon" icon="trash"/>
+                                <fa class="icon" icon="trash" @click="deleteItem(book)"/>
                                 <fa class="icon" icon="pen"/>
                                 <fa class="icon" :class="{ favicon: book.isFav }" icon="heart" @click="toggleFav(book)"/>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="category other">
+                <h2>Kategoria: Inne <fa class="icon-header" icon="bookmark"/></h2>
+                <hr>
+                <ul>
+                    <li v-for="other in filteredOthers" :key="other.id" :class="{ fav: other.isFav }">
+                        <div class="info">
+                            <div class="title-box">
+                                <p> {{ other.title }} </p>
+                            </div>
+                            <div class="description-box">
+                                <p class="desc"> {{ other.description }} </p>
+                            </div>
+                            <div class="icons">
+                                <fa class="icon" icon="trash" @click="deleteItem(other)"/>
+                                <fa class="icon" icon="pen"/>
+                                <fa class="icon" :class="{ favicon: other.isFav }" icon="heart" @click="toggleFav(other)"/>
                             </div>
                         </div>
                     </li>
@@ -65,15 +86,11 @@
         </div>
         
         <div v-if="showModal">
-    <AddModalView theme="sale" @close="toggleModal">
-      <template v-slot:links>
-        <a href="#">sign up now</a>
-        <a href="#">more info</a>
-      </template>
-      <h1>Okno modalne!</h1>
-      
-    </AddModalView>
-  </div>  
+            <AddModalView theme="sale" @close="toggleModal">
+            
+            
+            </AddModalView>
+        </div>  
     </div>
 
 </template>
@@ -97,6 +114,8 @@ export default {
         return {
             showAll: true,
             showModal: false,
+            newTitle: '',
+            newDescription: '',
             songs: [
                 { 
                     title: 'Above & Beyond - Gratitude', 
@@ -118,12 +137,61 @@ export default {
                     isFav: true 
                 },
             ],
+            nextItem: '',
 
             books: [
                 { 
                     title: 'Adam Mickiewicz - Dziady', 
                     description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', 
                     isFav: true 
+                },
+                { 
+                    title: 'Jeremy Clarkson - Świat według Clarksona', 
+                    description: 'Lorem ipsum dolor sit amet.', 
+                    isFav: false 
+                },
+                { 
+                    title: 'gardenstate, Oliver Smith - By Your Side', 
+                    description: 'Lorem ipsum dolor sit amet. Fajna książka.', 
+                    isFav: false 
+                },
+                { 
+                    title: 'Above & Beyond - Believer', 
+                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
+                    isFav: true 
+                },
+                { 
+                    title: 'Above & Beyond - Believer', 
+                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
+                    isFav: false 
+                },
+            ],
+
+            others: [
+                { 
+                    title: 'Adam Mickiewicz - Dziady', 
+                    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', 
+                    isFav: true 
+                },
+                { 
+                    title: 'Jeremy Clarkson - Świat według Clarksona', 
+                    description: 'Lorem ipsum dolor sit amet.', 
+                    isFav: false 
+                },
+                { 
+                    title: 'gardenstate, Oliver Smith - By Your Side', 
+                    description: 'Lorem ipsum dolor sit amet. Fajna książka.', 
+                    isFav: false 
+                },
+                { 
+                    title: 'Above & Beyond - Believer', 
+                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
+                    isFav: true 
+                },
+                { 
+                    title: 'Above & Beyond - Believer', 
+                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
+                    isFav: false 
                 },
                 { 
                     title: 'Jeremy Clarkson - Świat według Clarksona', 
@@ -155,9 +223,20 @@ export default {
         toggleFav(song) {
             song.isFav = !song.isFav;
         },
-            toggleModal() {
+        toggleModal() {
             this.showModal = !this.showModal
-            }
+        },
+        deleteItem(listItem) {
+            this.songs = this.songs.filter((item) => {
+                return listItem != item
+            })
+            this.books = this.books.filter((item) => {
+                return listItem != item
+            })
+            this.others = this.others.filter((item) => {
+                return listItem != item
+            })
+        }
     },
     computed: {
         filteredSongs() {
@@ -172,6 +251,13 @@ export default {
                 return this.books.filter(book => book.isFav)
             }else {
                 return this.books;
+            }
+        },
+        filteredOthers() {
+            if(!this.showAll) {
+                return this.others.filter(other => other.isFav)
+            }else {
+                return this.others;
             }
         }
     }
