@@ -22,12 +22,10 @@ export default {
   name: 'LoginView',
   data () {
     return {
-      isLoggedIn: {
-        type: Boolean,
-        default: false,
-      },
+      isLoggedIn: false,
       login: '',
       password: '',
+      userName: '',
 
       tempLogin: 'user',
       tempPassword: 'pass'
@@ -36,8 +34,17 @@ export default {
 
   methods: {
     handleSubmit() {
+      this.userName = this.checkLogin();
+      this.$router.push({name: 'home', params: {userName: this.userName}});
+    },
+
+    checkLogin() {
       if (this.login === this.tempLogin && this.password === this.tempPassword) {
-        return "prac";
+        console.log("zalogowano");
+        return "Użytkownik";
+      }
+      else {
+        return 'Niezalogowano';
       }
     }
   }

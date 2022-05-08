@@ -5,6 +5,7 @@
             <div class="list-header">
                 <div class="header">
                     <h1>Twoja lista</h1>
+                    <h6>Zalogowano jako: {{ loginName }} </h6>
                 </div>
                 <div class="fav-wrap">
                     <div class="fav-only">
@@ -86,11 +87,11 @@
         </div>
         
         <div v-if="showModal">
-            <AddModalView theme="sale" @close="toggleModal">
+            <AddModalView @close="toggleModal">
             
             
             </AddModalView>
-        </div>  
+        </div>
     </div>
 
 </template>
@@ -101,8 +102,33 @@
 
 import LoginView from "./LoginView.vue";
 import AddModalView from "./AddModalView.vue";
+import { useRoute } from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { getItem, setItem } from "./global.js";
+
+const {books, songs, others}=getItem();
+const songsBuff = ref(songs);
+const booksBuff = ref(books);
+const othersBuff = ref(others);
 
 export default {
+
+    setup() {
+
+        const route = useRoute();
+        let loginName = route.params.userName;
+
+        onMounted(()=>{
+            const {books, songs, others}=getItem();
+            songsBuff.value = songs;
+            booksBuff.value = books;
+            othersBuff.value = others;
+        })
+        console.log(songs.value);
+        return {
+            loginName
+        }
+    },
 
     components: {
         LoginView,
@@ -114,106 +140,9 @@ export default {
         return {
             showAll: true,
             showModal: false,
-            newTitle: '',
-            newDescription: '',
-            songs: [
-                { 
-                    title: 'Above & Beyond - Gratitude', 
-                    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', 
-                    isFav: true 
-                },
-                { 
-                    title: 'Tinlicker - Be Here and Now', 
-                    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Est velit minus incidunt temporibus cumque nulla eum corrupti molestias atque ipsa excepturi, autem corporis ab, id perspiciatis libero accusamus deleniti aut vero impedit nemo. Accusantium perferendis cupiditate quae aut praesentium quidem.', isFav: true 
-                },
-                { 
-                    title: 'gardenstate, Oliver Smith - By Your Side', 
-                    description: 'Lorem ipsum dolor sit amet.', 
-                    isFav: false 
-                },
-                { 
-                    title: 'Above & Beyond - Believer', 
-                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
-                    isFav: true 
-                },
-            ],
-            nextItem: '',
-
-            books: [
-                { 
-                    title: 'Adam Mickiewicz - Dziady', 
-                    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', 
-                    isFav: true 
-                },
-                { 
-                    title: 'Jeremy Clarkson - Świat według Clarksona', 
-                    description: 'Lorem ipsum dolor sit amet.', 
-                    isFav: false 
-                },
-                { 
-                    title: 'gardenstate, Oliver Smith - By Your Side', 
-                    description: 'Lorem ipsum dolor sit amet. Fajna książka.', 
-                    isFav: false 
-                },
-                { 
-                    title: 'Above & Beyond - Believer', 
-                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
-                    isFav: true 
-                },
-                { 
-                    title: 'Above & Beyond - Believer', 
-                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
-                    isFav: false 
-                },
-            ],
-
-            others: [
-                { 
-                    title: 'Adam Mickiewicz - Dziady', 
-                    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.', 
-                    isFav: true 
-                },
-                { 
-                    title: 'Jeremy Clarkson - Świat według Clarksona', 
-                    description: 'Lorem ipsum dolor sit amet.', 
-                    isFav: false 
-                },
-                { 
-                    title: 'gardenstate, Oliver Smith - By Your Side', 
-                    description: 'Lorem ipsum dolor sit amet. Fajna książka.', 
-                    isFav: false 
-                },
-                { 
-                    title: 'Above & Beyond - Believer', 
-                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
-                    isFav: true 
-                },
-                { 
-                    title: 'Above & Beyond - Believer', 
-                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
-                    isFav: false 
-                },
-                { 
-                    title: 'Jeremy Clarkson - Świat według Clarksona', 
-                    description: 'Lorem ipsum dolor sit amet.', 
-                    isFav: false 
-                },
-                { 
-                    title: 'gardenstate, Oliver Smith - By Your Side', 
-                    description: 'Lorem ipsum dolor sit amet. Fajna książka.', 
-                    isFav: false 
-                },
-                { 
-                    title: 'Above & Beyond - Believer', 
-                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
-                    isFav: true 
-                },
-                { 
-                    title: 'Above & Beyond - Believer', 
-                    description: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad, beatae?', 
-                    isFav: false 
-                },
-            ],
+            songs: songsBuff,
+            books: booksBuff,
+            others: othersBuff,
         }
     },
     methods: {
@@ -227,7 +156,7 @@ export default {
             this.showModal = !this.showModal
         },
         deleteItem(listItem) {
-            this.songs = this.songs.filter((item) => {
+            songsBuff.value = songsBuff.value.filter((item) => {
                 return listItem != item
             })
             this.books = this.books.filter((item) => {
@@ -315,6 +244,10 @@ nav {
     font-size: 1.4rem;
 }
 
+.header {
+    text-align: left;
+}
+
 .list-header {
     width: 100%;
     display: flex;
@@ -329,7 +262,7 @@ nav {
 
 .fav-wrap {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
     min-height: 80px;
 }

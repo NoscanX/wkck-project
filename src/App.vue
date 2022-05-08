@@ -119,10 +119,6 @@ nav {
     width: 100%;
 }
 
-.nav-list-item:hover {
-    /* color: var(--active-and-hover); */
-}
-
 .nav-list a.router-link-exact-active {
     font-weight: 700;
     background-image: linear-gradient(
