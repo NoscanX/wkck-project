@@ -19,6 +19,7 @@ const firebaseConfig = {
 };
 
 const isLoggedIn = ref(false);
+const currentUserName = ref('');
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -29,6 +30,22 @@ const loginUser = async (email, password) => {
     const userc = await signInWithEmailAndPassword(auth, email, password);
     dataCurrentEmail.value = email;
     isLoggedIn.value = true;
+    currentUserName.value = email;
+}
+
+const signOutUser = () => {
+    signOut(auth).then(()=>{
+        isLoggedIn.value = false;
+        console.log("signout success");
+    })
+    .catch((error)=>{
+        console.log("singnout error")
+        console.log(error);
+    });
+}
+
+function getUserName() {
+    return currentUserName;
 }
 
 function getIsLoggedIn(){
@@ -66,4 +83,4 @@ async function updateFavGlobal(id, settings, item) {
     )
 }
 
-export {setItem, getItem, loginUser, deleteItemGlobal, updateFavGlobal, getIsLoggedIn};
+export {setItem, getItem, loginUser, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName, signOutUser};

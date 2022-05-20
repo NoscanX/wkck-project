@@ -2,12 +2,13 @@
   <nav>
     <div class="nav-list">
       <router-link to="/" class="nav-list-item">Home</router-link>
-      <router-link to="/login" class="nav-list-item">Zaloguj</router-link>
+      <router-link to="/login" class="nav-list-item" v-if="!isLoggedInBuff">Zaloguj</router-link>
       <router-link to="/add" class="nav-list-item">Dodaj do listy</router-link>
       <router-link to="/help" class="nav-list-item">Pomoc</router-link>
     </div>
     <div class="log-in-list">
         <div class="theme-slider-box">
+            <button v-if="isLoggedInBuff" class="logout-btn" @click="signOutUser()">Wyloguj się</button>
             <h3>Zmień motyw</h3>
             <label class="switch">
                 <input type="checkbox" @click="changeTheme">
@@ -20,6 +21,9 @@
 </template>
 
 <script>
+import { getIsLoggedIn, signOutUser } from "./views/global.js";
+const isLoggedInBuff = getIsLoggedIn();
+
 export default {
     mounted(){
     if(localStorage.getItem('switch-theme') === 'dark-theme')
@@ -48,7 +52,13 @@ export default {
 			localStorage.setItem('switch-theme', themeName);
     	    document.documentElement.className = themeName;
 		},
-	}
+	},
+    data(){
+        return {
+            isLoggedInBuff,
+            signOutUser
+        }
+    }
 }
 </script>
 
@@ -192,6 +202,28 @@ input:checked+.slider:before {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.logout-btn {
+    margin-right: 1rem;
+    padding: 10px 10px;
+    border: 3px solid var(--list-background);
+    border-radius: 20px;
+    font-weight: bold;
+    background-color: var(--darker-accents);
+    color: var(--text-color);
+    text-transform: uppercase;
+    transition: 300ms all;
+    font-size: 1rem;
+}
+
+.logout-btn:hover{
+    background-image: linear-gradient(
+        var(--primary-gradient),
+        var(--secondary-gradient));
+    border: 3px solid var(--active-and-hover);
+    color: var(--theme-hover-button-text);
+    cursor: pointer;
 }
 
 </style>

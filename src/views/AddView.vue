@@ -8,7 +8,7 @@
         <input type="text" v-model="titleInput" required>
 
         <label>Opis</label>
-        <input type="text" v-model="descriptionInput">
+        <input type="text" v-model="descriptionInput" required>
 
         <label>Kategoria</label>
         <select v-model="categoryInput" required>

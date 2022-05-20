@@ -5,7 +5,7 @@
             <div class="list-header">
                 <div class="header">
                     <h1>Twoja lista</h1>
-                    <h6>Zalogowano jako: {{ loginName }} </h6>
+                    <h6>Zalogowano jako: {{ currentUserName }} </h6>
                 </div>
                 <div class="fav-wrap">
                     <div class="fav-only">
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div v-else class="error-login-box">
-            <h1>Musisz się zalogować żeby zobaczyc listę!</h1>
+            <h1>Musisz się zalogować żeby zobaczyć listę!</h1>
         </div>
         
         <div v-if="showModal">
@@ -107,13 +107,14 @@ import LoginView from "./LoginView.vue";
 import AddModalView from "./AddModalView.vue";
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
-import { getItem, setItem, deleteItemGlobal, updateFavGlobal, getIsLoggedIn } from "./global.js";
+import { getItem, setItem, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName } from "./global.js";
 
 const songsBuff = ref([]);
 const booksBuff = ref([]);
 const othersBuff = ref([]);
 
 const isLoggedInBuff = getIsLoggedIn();
+const currentUserName = getUserName();
 
 export default {
 
@@ -134,7 +135,8 @@ export default {
 
         return {
             loginName,
-            isLoggedInBuff
+            isLoggedInBuff,
+            currentUserName
         }
     },
 

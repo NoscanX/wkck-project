@@ -87,7 +87,6 @@ export default {
 .login-panel button{
     margin-top: 10px;
     padding: 10px 50px;
-    border: 0;
     border: 3px solid var(--list-background);
     border-radius: 20px;
     font-weight: bold;
