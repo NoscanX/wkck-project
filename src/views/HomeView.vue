@@ -1,7 +1,7 @@
 <template>
   <div class="content">
         
-        <div class="list-box">
+        <div class="list-box" v-if="isLoggedInBuff">
             <div class="list-header">
                 <div class="header">
                     <h1>Twoja lista</h1>
@@ -85,6 +85,9 @@
                 </ul>
             </div>
         </div>
+        <div v-else class="error-login-box">
+            <h1>Musisz się zalogować żeby zobaczyc listę!</h1>
+        </div>
         
         <div v-if="showModal">
             <AddModalView @close="toggleModal">
@@ -104,29 +107,34 @@ import LoginView from "./LoginView.vue";
 import AddModalView from "./AddModalView.vue";
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
-import { getItem, setItem } from "./global.js";
+import { getItem, setItem, deleteItemGlobal, updateFavGlobal, getIsLoggedIn } from "./global.js";
 
-const {books, songs, others}=getItem();
-const songsBuff = ref(songs);
-const booksBuff = ref(books);
-const othersBuff = ref(others);
+const songsBuff = ref([]);
+const booksBuff = ref([]);
+const othersBuff = ref([]);
+
+const isLoggedInBuff = getIsLoggedIn();
 
 export default {
 
     setup() {
 
         const route = useRoute();
-        let loginName = route.params.userName;
+        const loginName = route.params.userName;
 
-        onMounted(()=>{
-            const {books, songs, others}=getItem();
-            songsBuff.value = songs;
-            booksBuff.value = books;
-            othersBuff.value = others;
-        })
-        console.log(songs.value);
+        getItem('SONGS').then((response)=>{
+           songsBuff.value = response; 
+        });
+        getItem('BOOKS').then((response)=>{
+           booksBuff.value = response; 
+        });
+        getItem('OTHERS').then((response)=>{
+           othersBuff.value = response; 
+        });
+
         return {
-            loginName
+            loginName,
+            isLoggedInBuff
         }
     },
 
@@ -149,21 +157,55 @@ export default {
         toggleShowAll() {
             this.showAll = !this.showAll;
         },
-        toggleFav(song) {
-            song.isFav = !song.isFav;
+
+        toggleFav(listItem) {
+            listItem.isFav = !listItem.isFav;
+            songsBuff.value.forEach((item) => {
+                if(listItem == item){
+                    updateFavGlobal(item.id, 'SONGS', item);
+                }
+            })
+            booksBuff.value.forEach((item) => {
+                if(listItem == item){
+                    updateFavGlobal(item.id, 'BOOKS', item);
+                }
+            })
+            othersBuff.value.forEach((item) => {
+                if(listItem == item){
+                    updateFavGlobal(item.id, 'OTHERS', item);
+                }
+            })
         },
         toggleModal() {
             this.showModal = !this.showModal
         },
         deleteItem(listItem) {
             songsBuff.value = songsBuff.value.filter((item) => {
-                return listItem != item
+                if(listItem != item){
+                    return true;
+                }
+                else {
+                    deleteItemGlobal(item.id, 'SONGS')
+                    return false;
+                }
             })
             this.books = this.books.filter((item) => {
-                return listItem != item
+                if(listItem != item){
+                    return true;
+                }
+                else {
+                    deleteItemGlobal(item.id, 'BOOKS')
+                    return false;
+                }
             })
             this.others = this.others.filter((item) => {
-                return listItem != item
+                if(listItem != item){
+                    return true;
+                }
+                else {
+                    deleteItemGlobal(item.id, 'OTHERS')
+                    return false;
+                }
             })
         }
     },
@@ -194,8 +236,6 @@ export default {
 </script>
 
 <style lang="css">
-
-
 
 .content {
     display: flex;
@@ -337,6 +377,10 @@ nav {
 
 .heart-fav {
     color: red;
+}
+
+.error-login-box {
+    margin-top: 10rem;
 }
 
 </style>

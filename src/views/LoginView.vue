@@ -2,7 +2,7 @@
   <div class="content">
     <div class="login-panel">
       <h1>Zaloguj się</h1>
-      <form @submit.prevent="handleSubmit">
+      <form @submit.prevent="checkLogin">
         <label>Login</label>
         <input type="text" v-model="login" required>
         <label>Hasło</label>
@@ -16,37 +16,25 @@
 </template>
 
 <script>
+import { loginUser } from './global';
 
 export default {
 
   name: 'LoginView',
   data () {
     return {
-      isLoggedIn: false,
       login: '',
       password: '',
       userName: '',
-
-      tempLogin: 'user',
-      tempPassword: 'pass'
     }
   },
 
   methods: {
-    handleSubmit() {
-      this.userName = this.checkLogin();
-      this.$router.push({name: 'home', params: {userName: this.userName}});
-    },
-
     checkLogin() {
-      if (this.login === this.tempLogin && this.password === this.tempPassword) {
-        console.log("zalogowano");
-        return "Użytkownik";
-      }
-      else {
-        return 'Niezalogowano';
-      }
-    }
+      loginUser(this.login, this.password).then(()=>{
+        this.$router.push({name: 'home', params: {userName: this.login}});
+      })
+    },
   }
 }
 </script>

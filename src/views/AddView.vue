@@ -46,17 +46,17 @@ export default {
   methods: {
     handleSubmit() {
       if(this.categoryInput == 'category-music') {
-        this.songs.push({title: this.titleInput, description: this.descriptionInput, isFav: false})
+        this.songs = {title: this.titleInput, description: this.descriptionInput, isFav: false}
         setItem(this.songs, 'SONGS');
         this.$router.push({name: 'home'})
       }
       if(this.categoryInput == 'category-book') {
-        this.books.push({title: this.titleInput, description: this.descriptionInput, isFav: false})
+        this.books = {title: this.titleInput, description: this.descriptionInput, isFav: false}
         setItem(this.books, 'BOOKS');
         this.$router.push({name: 'home'})
       }
       if(this.categoryInput == 'category-other') {
-        this.others.push({title: this.titleInput, description: this.descriptionInput, isFav: false})
+        this.others = {title: this.titleInput, description: this.descriptionInput, isFav: false}
         setItem(this.others, 'OTHERS');
         this.$router.push({name: 'home'})
       }
