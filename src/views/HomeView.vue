@@ -87,6 +87,7 @@
         </div>
         <div v-else class="error-login-box">
             <h1>Musisz się zalogować żeby zobaczyć listę!</h1>
+            <img src="../assets/soczek.png" alt="soczek" class="juice-png">
         </div>
         
         <div v-if="showModal">
@@ -383,6 +384,11 @@ nav {
 
 .error-login-box {
     margin-top: 10rem;
+}
+
+.juice-png {
+    width: 200px;
+    margin-top: 8rem;
 }
 
 </style>
