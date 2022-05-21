@@ -1,13 +1,13 @@
 <template>
   <div class="content">
-    <div class="login-panel">
-      <h1>Logowanie</h1>
-      <form @submit.prevent="checkLogin">
+    <div class="register-panel">
+      <h1>Rejestracja</h1>
+      <form @submit.prevent="registerHandler">
         <label>Login</label>
         <input type="text" v-model="login" required>
         <label>Hasło</label>
         <input type="password" v-model="password" required>
-        <button class="btn-submit" type="submit">Zaloguj</button>
+        <button class="btn-submit" type="submit">Zarejestruj</button>
       </form>
     </div>
     <p>Login: {{ login }}</p>
@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import { loginUser } from './global';
+import { registerUser } from './global';
 
 export default {
 
-  name: 'LoginView',
+  name: 'RegisterView',
   data () {
     return {
       login: '',
@@ -30,10 +30,9 @@ export default {
   },
 
   methods: {
-    checkLogin() {
-      loginUser(this.login, this.password).then(()=>{
-        this.$router.push({name: 'home', params: {userName: this.login}});
-      })
+    registerHandler() {
+      registerUser(this.login, this.password);
+      this.$router.push({name: 'home', params: {userName: this.login}});
     },
   }
 }
@@ -41,13 +40,13 @@ export default {
 
 <style lang="css">
 
-.login-panel {
+.register-panel {
     text-align: center;
     width: 70%;
     margin-top: 10rem;
 }
 
-.login-panel form {
+.register-panel form {
     display: flex;
     flex-direction: column;
     border-radius: 10px;   
@@ -64,11 +63,11 @@ export default {
     outline: 2px solid var(--active-and-hover);
 }
 
-.login-panel label {
+.register-panel label {
     font-size: 1.2rem;
 }
 
-.login-panel input{
+.register-panel input{
     width: 50%;
     border: 0;
     border-radius: 10px;
@@ -80,11 +79,11 @@ export default {
     outline: 1px solid var(--accents);
 }
 
-.login-panel input:focus{
+.register-panel input:focus{
     outline: 3px solid var(--active-and-hover);
 }
 
-.login-panel button{
+.register-panel button{
     margin-top: 10px;
     padding: 10px 50px;
     border: 3px solid var(--list-background);

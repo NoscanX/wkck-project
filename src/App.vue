@@ -3,7 +3,8 @@
     <div class="nav-list">
       <router-link to="/" class="nav-list-item">Home</router-link>
       <router-link to="/login" class="nav-list-item" v-if="!isLoggedInBuff">Zaloguj</router-link>
-      <router-link to="/add" class="nav-list-item">Dodaj do listy</router-link>
+      <router-link to="/register" class="nav-list-item" v-if="!isLoggedInBuff">Zarejestruj</router-link>
+      <router-link to="/add" class="nav-list-item" v-if="isLoggedInBuff">Dodaj do listy</router-link>
       <router-link to="/help" class="nav-list-item">Pomoc</router-link>
     </div>
     <div class="log-in-list">

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import HelpView from '../views/HelpView.vue'
 import LoginView from '../views/LoginView.vue'
+import RegisterView from '../views/RegisterView.vue'
 import AddView from '../views/AddView.vue'
 import AddModalView from '../views/AddModalView'
 
@@ -28,6 +29,11 @@ const routes = [
     path: '/add',
     name: 'add',
     component: AddView
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView
   }
 ]
 

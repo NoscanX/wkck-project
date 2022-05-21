@@ -26,6 +26,19 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const auth = getAuth();
+
+const registerUser = async (email, password) => {
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential)=>{
+        const user = userCredential.user;
+        console.log('Rejestracja pomyslna');
+    })
+    .catch((error) => {
+        console.log('rejestracja error');
+        console.log(error);
+    })
+}
+
 const loginUser = async (email, password) => {
     const userc = await signInWithEmailAndPassword(auth, email, password);
     dataCurrentEmail.value = email;
@@ -83,4 +96,4 @@ async function updateFavGlobal(id, settings, item) {
     )
 }
 
-export {setItem, getItem, loginUser, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName, signOutUser};
+export {setItem, getItem, loginUser, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName, signOutUser, registerUser};
