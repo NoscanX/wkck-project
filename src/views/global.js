@@ -1,10 +1,13 @@
 import { ref } from 'vue'
 import { doc, setDoc, getFirestore, addDoc, collection, query, where, getDocs, deleteDoc, updateDoc } from "firebase/firestore"; 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { async } from '@firebase/util';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -49,7 +52,9 @@ const loginUser = async (email, password) => {
 const signOutUser = () => {
     signOut(auth).then(()=>{
         isLoggedIn.value = false;
-        console.log("signout success");
+        toast.success("Wylogowano pomyślnie!", {
+            timeout: 3000
+        });
     })
     .catch((error)=>{
         console.log("singnout error")

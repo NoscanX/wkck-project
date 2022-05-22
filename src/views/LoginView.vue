@@ -10,13 +10,15 @@
         <button class="btn-submit" type="submit">Zaloguj</button>
       </form>
     </div>
-    <p>Login: {{ login }}</p>
-    <p>Password: {{ password }}</p>
+    <!-- <p>Login: {{ login }}</p>
+    <p>Password: {{ password }}</p> -->
   </div>
 </template>
 
 <script>
 import { loginUser } from './global';
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 export default {
 
@@ -33,6 +35,14 @@ export default {
     checkLogin() {
       loginUser(this.login, this.password).then(()=>{
         this.$router.push({name: 'home', params: {userName: this.login}});
+        toast.success("Zalogowano pomyślnie!", {
+          timeout: 3000
+        });
+      })
+      .catch((error)=>{
+        toast.success("Wprowadzono złe dane!", {
+          timeout: 3000
+        });
       })
     },
   }

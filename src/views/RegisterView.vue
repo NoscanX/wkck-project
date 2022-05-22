@@ -10,13 +10,15 @@
         <button class="btn-submit" type="submit">Zarejestruj</button>
       </form>
     </div>
-    <p>Login: {{ login }}</p>
-    <p>Password: {{ password }}</p>
+    <!-- <p>Login: {{ login }}</p>
+    <p>Password: {{ password }}</p> -->
   </div>
 </template>
 
 <script>
 import { registerUser } from './global';
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 export default {
 
@@ -33,6 +35,9 @@ export default {
     registerHandler() {
       registerUser(this.login, this.password);
       this.$router.push({name: 'home', params: {userName: this.login}});
+      toast.success("Konto utworzone pomyślnie!", {
+          timeout: 3000
+      });
     },
   }
 }

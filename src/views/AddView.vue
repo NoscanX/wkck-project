@@ -21,15 +21,17 @@
 
       </form>
     </div>
-    <p>Nazwa: {{ titleInput }}</p>
+    <!-- <p>Nazwa: {{ titleInput }}</p>
     <p>Opis: {{ descriptionInput }}</p>
-    <p>Kategoria: {{ categoryInput }}</p>
+    <p>Kategoria: {{ categoryInput }}</p> -->
   </div>
 </template>
 
 <script>
 import { setItem } from './global';
 import HomeView from "./HomeView.vue";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 export default {
   data() {
@@ -60,6 +62,9 @@ export default {
         setItem(this.others, 'OTHERS');
         this.$router.push({name: 'home'})
       }
+      toast.success("Pozycja pomyślnie dodana do listy!", {
+          timeout: 3000
+      });
     }
   },
   components: {

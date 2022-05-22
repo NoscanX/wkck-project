@@ -104,6 +104,7 @@ nav {
     position: fixed;
     width: 100%;
     background-color: var(--primary-background);
+    z-index: 10;
 }
 
 .nav-list-item {

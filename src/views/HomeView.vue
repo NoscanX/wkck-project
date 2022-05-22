@@ -109,6 +109,8 @@ import AddModalView from "./AddModalView.vue";
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { getItem, setItem, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName } from "./global.js";
+import { useToast } from "vue-toastification";
+const toast = useToast();
 
 const songsBuff = ref([]);
 const booksBuff = ref([]);
@@ -159,6 +161,16 @@ export default {
     methods: {
         toggleShowAll() {
             this.showAll = !this.showAll;
+            if(this.showAll) {
+                toast.success("Wyświetlono wszystkie pozycje z listy!", {
+                    timeout: 2000
+                });
+            }
+            else {
+                toast.success("Wyświetlono ulubione elementy z listy!", {
+                    timeout: 2000
+                });
+            }
         },
 
         toggleFav(listItem) {
@@ -178,6 +190,16 @@ export default {
                     updateFavGlobal(item.id, 'OTHERS', item);
                 }
             })
+            if(listItem.isFav) {
+                toast.success("Pozycja dodana do ulubionych!", {
+                    timeout: 2000
+                });
+            }
+            else {
+                toast.success("Pozycja usunięta z ulubionych!", {
+                    timeout: 2000
+                });
+            }
         },
         toggleModal() {
             this.showModal = !this.showModal
@@ -210,6 +232,9 @@ export default {
                     return false;
                 }
             })
+            toast.success("Pozycja pomyślnie usunięta z listy!", {
+                timeout: 2000
+            });
         }
     },
     computed: {
