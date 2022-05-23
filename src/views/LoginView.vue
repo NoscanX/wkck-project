@@ -40,7 +40,7 @@ export default {
         });
       })
       .catch((error)=>{
-        toast.success("Wprowadzono złe dane!", {
+        toast.error("Wprowadzono złe dane!", {
           timeout: 3000
         });
       })

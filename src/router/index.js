@@ -4,7 +4,7 @@ import HelpView from '../views/HelpView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import AddView from '../views/AddView.vue'
-import AddModalView from '../views/AddModalView'
+import EditModalView from '../views/EditModalView'
 
 const routes = [
   {

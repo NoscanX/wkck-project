@@ -101,4 +101,12 @@ async function updateFavGlobal(id, settings, item) {
     )
 }
 
+async function editData(id, settings, item) {
+    await updateDoc(doc(db, settings, id),
+        {title: item.title, 
+         description: item.description,
+         category: item.category}
+    )
+}
+
 export {setItem, getItem, loginUser, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName, signOutUser, registerUser};

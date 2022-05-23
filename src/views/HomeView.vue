@@ -15,10 +15,9 @@
                         <span class="slider round"></span>
                     </label>
                     </div>
-                    <!-- <div>
-                        <h1>Zaloguj sie lepiej</h1>
+                    <div>
                         <button @click="toggleModal">sdasdas</button>
-                    </div> -->
+                    </div>
                 </div>
             </div>
             <div class="category music">
@@ -35,7 +34,7 @@
                             </div>
                             <div class="icons">
                                 <fa class="icon" icon="trash" @click="deleteItem(song)"/>
-                                <fa class="icon" icon="pen"/>
+                                <fa class="icon" icon="pen" @click="toggleModal"/>
                                 <fa class="icon" :class="{ favicon: song.isFav }" icon="heart" @click="toggleFav(song)"/>
                             </div>
                         </div>
@@ -56,7 +55,7 @@
                             </div>
                             <div class="icons">
                                 <fa class="icon" icon="trash" @click="deleteItem(book)"/>
-                                <fa class="icon" icon="pen"/>
+                                <fa class="icon" icon="pen" @click="toggleModal"/>
                                 <fa class="icon" :class="{ favicon: book.isFav }" icon="heart" @click="toggleFav(book)"/>
                             </div>
                         </div>
@@ -77,7 +76,7 @@
                             </div>
                             <div class="icons">
                                 <fa class="icon" icon="trash" @click="deleteItem(other)"/>
-                                <fa class="icon" icon="pen"/>
+                                <fa class="icon" icon="pen" @click="toggleModal"/>
                                 <fa class="icon" :class="{ favicon: other.isFav }" icon="heart" @click="toggleFav(other)"/>
                             </div>
                         </div>
@@ -105,7 +104,7 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 import LoginView from "./LoginView.vue";
-import AddModalView from "./AddModalView.vue";
+import AddModalView from "./EditModalView.vue";
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { getItem, setItem, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName } from "./global.js";

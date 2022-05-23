@@ -88,8 +88,6 @@ export default {
   margin: 0 auto;
   width: 60%;
   max-width: 1200px;
-  display: flex;
-  flex-direction: column;
   padding: 4rem 0;
   align-items: center;
   background-color: transparent;
@@ -116,10 +114,6 @@ export default {
 
 .add-panel input:focus, select:focus{
   outline: 3px solid var(--active-and-hover);
-}
-
-.desc-input {
-
 }
 
 .add-panel button{
