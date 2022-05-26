@@ -18,7 +18,7 @@
               <option value="category-book">Książki</option>
               <option value="category-other">Inne</option>
             </select>
-            <button class="btn-submit" type="submit" @click="handleSubmit()">Zatwierdź zmiany</button>
+            <button class="btn-submit" type="submit" @click="handleUpdate()">Zatwierdź zmiany</button>
             <button class="btn-submit" @click="closeModal">Anuluj</button>
 
           </form>
@@ -32,10 +32,16 @@
 </template>
 
 <script>
+import { updateData } from "./global.js";
+
 export default {
   methods: {
     closeModal() {
       this.$emit('close')
+    },
+
+    handleUpdate() {
+      updateData(item.id, 'SONGS', item)
     }
   }
 }

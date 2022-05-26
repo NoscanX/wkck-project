@@ -101,12 +101,15 @@ async function updateFavGlobal(id, settings, item) {
     )
 }
 
-async function editData(id, settings, item) {
-    await updateDoc(doc(db, settings, id),
-        {title: item.title, 
-         description: item.description,
-         category: item.category}
-    )
+async function updateData(id, settings, item) {
+    // await updateDoc(doc(db, settings, id),
+    //     {title: item.title, 
+    //      description: item.description,
+    //      category: item.category}
+    // )
+    console.log(item.title);
+    console.log(item.description);
+    console.log(item.category);
 }
 
-export {setItem, getItem, loginUser, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName, signOutUser, registerUser};
+export {setItem, getItem, loginUser, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName, signOutUser, registerUser, updateData};

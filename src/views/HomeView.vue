@@ -90,10 +90,10 @@
         </div>
         
         <div v-if="showModal">
-            <AddModalView @close="toggleModal">
+            <EditModalView @close="toggleModal">
             
             
-            </AddModalView>
+            </EditModalView>
         </div>
     </div>
 
@@ -104,7 +104,7 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 import LoginView from "./LoginView.vue";
-import AddModalView from "./EditModalView.vue";
+import EditModalView from "./EditModalView.vue";
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
 import { getItem, setItem, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName } from "./global.js";
@@ -144,7 +144,7 @@ export default {
 
     components: {
         LoginView,
-        AddModalView
+        EditModalView
     },
 
     name: 'HomeView',
