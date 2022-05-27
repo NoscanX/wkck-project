@@ -23,6 +23,9 @@ const firebaseConfig = {
 
 const isLoggedIn = ref(false);
 const currentUserName = ref('');
+const data = ref({songs:[], books:[], others:[]})
+const dataCurrentEmail = ref('');
+const currentlyModified = ref({});
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -70,9 +73,13 @@ function getIsLoggedIn(){
     return isLoggedIn;
 }
 
-const data = ref({songs:[], books:[], others:[]})
+function getCurrentlyModified(){
+    return currentlyModified;
+}
 
-const dataCurrentEmail = ref('');
+function setCurrentlyModified(modifiedData, setting){
+    currentlyModified.value = {...modifiedData, setting}    
+}
 
 async function setItem(item, setting){
     await addDoc(collection(db, setting), 
@@ -102,14 +109,10 @@ async function updateFavGlobal(id, settings, item) {
 }
 
 async function updateData(id, settings, item) {
-    // await updateDoc(doc(db, settings, id),
-    //     {title: item.title, 
-    //      description: item.description,
-    //      category: item.category}
-    // )
-    console.log(item.title);
-    console.log(item.description);
-    console.log(item.category);
+    await updateDoc(doc(db, settings, id),
+        {title: item.title, 
+         description: item.description
+    })
 }
 
-export {setItem, getItem, loginUser, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName, signOutUser, registerUser, updateData};
+export {setItem, getItem, loginUser, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName, signOutUser, registerUser, updateData, getCurrentlyModified, setCurrentlyModified };

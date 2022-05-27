@@ -7,17 +7,11 @@
           <form @submit.prevent>
 
             <label>Nazwa</label>
-            <input type="text" v-model="editTitleInput" required>
+            <input type="text" :value="data.title" @input="t => data.title = t.target.value" required>
 
             <label>Opis</label>
-            <input type="text" v-model="editDescriptionInput" required>
+            <input type="text" :value="data.description" @input="d => data.description = d.target.value" required>
 
-            <label>Kategoria</label>
-            <select v-model="editCategoryInput" required>
-              <option value="category-music">Muzyka</option>
-              <option value="category-book">Książki</option>
-              <option value="category-other">Inne</option>
-            </select>
             <button class="btn-submit" type="submit" @click="handleUpdate()">Zatwierdź zmiany</button>
             <button class="btn-submit" @click="closeModal">Anuluj</button>
 
@@ -32,16 +26,39 @@
 </template>
 
 <script>
-import { updateData } from "./global.js";
+import { updateData, getCurrentlyModified } from "./global.js";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
+const data = getCurrentlyModified();
 
 export default {
-  methods: {
+
+  setup(){
+    console.log(getCurrentlyModified());
+    return {
+      data
+    }
+  },
+
+    methods: {
     closeModal() {
       this.$emit('close')
     },
 
     handleUpdate() {
-      updateData(item.id, 'SONGS', item)
+      updateData(data.value.id, data.value.setting, data.value)
+      .then(()=>{
+        this.$emit('reload');
+        toast.success("Modyfikacja pomyślna!", {
+          timeout: 2000
+        });
+      })
+      .catch(()=>{
+        toast.error("Modyfikacja niepomyślna!", {
+          timeout: 2000
+        });
+      })
     }
   }
 }

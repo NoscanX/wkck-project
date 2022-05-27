@@ -15,9 +15,6 @@
                         <span class="slider round"></span>
                     </label>
                     </div>
-                    <div>
-                        <button @click="toggleModal">sdasdas</button>
-                    </div>
                 </div>
             </div>
             <div class="category music">
@@ -34,7 +31,7 @@
                             </div>
                             <div class="icons">
                                 <fa class="icon" icon="trash" @click="deleteItem(song)"/>
-                                <fa class="icon" icon="pen" @click="toggleModal"/>
+                                <fa class="icon" icon="pen" @click="toggleModal(song, 'SONGS')"/>
                                 <fa class="icon" :class="{ favicon: song.isFav }" icon="heart" @click="toggleFav(song)"/>
                             </div>
                         </div>
@@ -55,7 +52,7 @@
                             </div>
                             <div class="icons">
                                 <fa class="icon" icon="trash" @click="deleteItem(book)"/>
-                                <fa class="icon" icon="pen" @click="toggleModal"/>
+                                <fa class="icon" icon="pen" @click="toggleModal(book, 'BOOKS')"/>
                                 <fa class="icon" :class="{ favicon: book.isFav }" icon="heart" @click="toggleFav(book)"/>
                             </div>
                         </div>
@@ -76,7 +73,7 @@
                             </div>
                             <div class="icons">
                                 <fa class="icon" icon="trash" @click="deleteItem(other)"/>
-                                <fa class="icon" icon="pen" @click="toggleModal"/>
+                                <fa class="icon" icon="pen" @click="toggleModal(other, 'OTHERS')"/>
                                 <fa class="icon" :class="{ favicon: other.isFav }" icon="heart" @click="toggleFav(other)"/>
                             </div>
                         </div>
@@ -90,7 +87,7 @@
         </div>
         
         <div v-if="showModal">
-            <EditModalView @close="toggleModal">
+            <EditModalView @close="toggleModal" @reload="reloadHomeAfterUpdate">
             
             
             </EditModalView>
@@ -107,7 +104,7 @@ import LoginView from "./LoginView.vue";
 import EditModalView from "./EditModalView.vue";
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue';
-import { getItem, setItem, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName } from "./global.js";
+import { getItem, setItem, deleteItemGlobal, updateFavGlobal, getIsLoggedIn, getUserName, getCurrentlyModified, setCurrentlyModified } from "./global.js";
 import { useToast } from "vue-toastification";
 const toast = useToast();
 
@@ -200,9 +197,25 @@ export default {
                 });
             }
         },
-        toggleModal() {
-            this.showModal = !this.showModal
+
+        toggleModal(itemToModify, setting) {
+            setCurrentlyModified(itemToModify, setting);
+            this.showModal = !this.showModal;
         },
+        
+        reloadHomeAfterUpdate() {
+            getItem('SONGS').then((response)=>{
+                songsBuff.value = response; 
+            });
+            getItem('BOOKS').then((response)=>{
+                booksBuff.value = response; 
+            });
+            getItem('OTHERS').then((response)=>{
+                othersBuff.value = response; 
+            });
+            this.showModal = !this.showModal;
+        },
+
         deleteItem(listItem) {
             songsBuff.value = songsBuff.value.filter((item) => {
                 if(listItem != item){
@@ -244,6 +257,7 @@ export default {
                 return this.songs;
             }
         },
+
         filteredBooks() {
             if(!this.showAll) {
                 return this.books.filter(book => book.isFav)
@@ -251,6 +265,7 @@ export default {
                 return this.books;
             }
         },
+
         filteredOthers() {
             if(!this.showAll) {
                 return this.others.filter(other => other.isFav)
